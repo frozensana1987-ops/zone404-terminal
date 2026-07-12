@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ПРОТОКОЛ "ИСКРА" // ТЕРМИНАЛ ЗОНЫ 404</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+    <div id="scanline"></div>
+    
+    <div id="terminal">
+        <div id="header">
+            <div class="logo">PATRIOOT</div>
+            <div class="title">ПРОТОКОЛ "ИСКРА" v2.7.38</div>
+            <div class="logo">DORA</div>
+        </div>
+        
+        <div id="log"></div>
+        
+        <div id="input-area" style="display: none;">
+            <span class="prompt">&gt;</span>
+            <input type="text" id="userInput" autocomplete="off" autocapitalize="off" spellcheck="false">
+            <span class="cursor">█</span>
+        </div>
+        
+        <div id="game-board" style="display: none;"></div>
+        
+        <div id="action-buttons" style="display: none;"></div>
+    </div>
+
+    <audio id="bgSound" loop></audio>
+    <audio id="typeSound"></audio>
+    <audio id="errorSound"></audio>
+    <audio id="successSound"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>

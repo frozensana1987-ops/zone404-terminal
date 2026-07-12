@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#2d2d2d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0a0a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00ffff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#00ff00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00ffff;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <rect width="400" height="300" fill="#000"/>
+  
+  <rect x="100" y="80" width="200" height="140" rx="8" fill="url(#bodyGrad)" stroke="#00ff00" stroke-width="2"/>
+  
+  <rect x="120" y="100" width="60" height="30" rx="4" fill="#001100" stroke="#00ff00" stroke-width="1"/>
+  <text x="150" y="120" font-family="monospace" font-size="10" fill="#00ff00" text-anchor="middle">POWER</text>
+  
+  <rect x="220" y="100" width="60" height="30" rx="4" fill="#001100" stroke="#00ffff" stroke-width="1"/>
+  <text x="250" y="120" font-family="monospace" font-size="10" fill="#00ffff" text-anchor="middle">ARC</text>
+  
+  <circle cx="150" cy="160" r="15" fill="#001100" stroke="#00ff00" stroke-width="2"/>
+  <circle cx="150" cy="160" r="8" fill="#00ff00" filter="url(#glow)"/>
+  
+  <rect x="180" y="145" width="40" height="30" rx="2" fill="#002200" stroke="#00ff00" stroke-width="1"/>
+  <text x="200" y="165" font-family="monospace" font-size="8" fill="#00ff00" text-anchor="middle">2077</text>
+  
+  <path d="M 300 150 L 380 150" stroke="url(#arcGrad)" stroke-width="4" filter="url(#glow)"/>
+  <circle cx="380" cy="150" r="8" fill="#00ffff" filter="url(#glow)"/>
+  <circle cx="380" cy="150" r="4" fill="#ffffff"/>
+  
+  <rect x="130" y="220" width="140" height="20" rx="4" fill="#001100" stroke="#00ff00" stroke-width="1"/>
+  <text x="200" y="235" font-family="monospace" font-size="10" fill="#00ff00" text-anchor="middle">НЕОНОВАЯ АРКАДИЯ</text>
+  
+  <text x="200" y="270" font-family="monospace" font-size="12" fill="#00ffff" text-anchor="middle" filter="url(#glow)">СВАРОЧНЫЙ КОМПЛЕКС v2.077</text>
+  
+  <line x1="50" y1="280" x2="350" y2="280" stroke="#003300" stroke-width="1"/>
+  <text x="200" y="295" font-family="monospace" font-size="8" fill="#004400" text-anchor="middle">PATRIOOT × DORA INDUSTRIES</text>
+</svg>
