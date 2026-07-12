@@ -170,7 +170,7 @@ const questData = [
             { text: 'Похоже, он оставил кое-что для того,', class: 'ai' },
             { text: 'кто сможет пройти все проверки.', class: 'ai' },
             { text: '────────────────────────────────────────', class: 'divider' },
-            { text: 'image:assets/images/level2.jpg', class: 'image' },
+            { text: 'image:assets/images/levelD.jpg', class: 'image' },
             { text: '[АРХИВНОЕ ФОТО: СУБЪЕКТ-А. Дикий Урал.]', class: 'system' }
         ],
         questions: [
