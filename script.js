@@ -283,27 +283,89 @@ const userInput = document.getElementById('userInput');
 const gameBoard = document.getElementById('game-board');
 const actionButtons = document.getElementById('action-buttons');
 
-const bgSound = document.getElementById('bgSound');
-const typeSound = document.getElementById('typeSound');
-const errorSound = document.getElementById('errorSound');
-const successSound = document.getElementById('successSound');
+let audioCtx = null;
+
+function getAudioContext() {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    return audioCtx;
+}
 
 function initAudio() {
-    bgSound.src = 'assets/audio/loop.wav';
-    typeSound.src = 'assets/audio/typewriter.wav';
-    errorSound.src = 'assets/audio/error.wav';
-    successSound.src = 'assets/audio/success.wav';
-    
-    bgSound.volume = 0.3;
-    typeSound.volume = 0.5;
-    errorSound.volume = 0.5;
-    successSound.volume = 0.5;
+    document.addEventListener('click', () => {
+        getAudioContext();
+    }, { once: true });
+}
+
+function playTypeSound() {
+    try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.frequency.value = 800 + Math.random() * 400;
+        osc.type = 'square';
+        gain.gain.value = 0.05;
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.05);
+    } catch(e) {}
+}
+
+function playErrorSound() {
+    try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.frequency.value = 200;
+        osc.type = 'sawtooth';
+        gain.gain.value = 0.15;
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.3);
+    } catch(e) {}
+}
+
+function playSuccessSound() {
+    try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.frequency.value = 600;
+        osc.type = 'sine';
+        gain.gain.value = 0.15;
+        osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.15);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.4);
+    } catch(e) {}
+}
+
+function playBgLoop() {
+    try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.frequency.value = 55;
+        osc.type = 'sine';
+        gain.gain.value = 0.06;
+        osc.start();
+        window._bgOsc = osc;
+        window._bgGain = gain;
+    } catch(e) {}
 }
 
 function playSound(sound) {
-    if (sound && sound.src) {
-        sound.currentTime = 0;
-        sound.play().catch(() => {});
+    if (typeof sound === 'function') {
+        sound();
     }
 }
 
@@ -359,7 +421,7 @@ async function typeWriter(text, className = '', speed = 25) {
                 
                 const now = Date.now();
                 if (now - lastSoundTime > 80 && text[i-1] !== ' ') {
-                    playSound(typeSound);
+                    playSound(playTypeSound);
                     lastSoundTime = now;
                 }
             } else {
@@ -464,7 +526,7 @@ async function handleBiometricFail(level) {
         return true;
     }
     
-    playSound(errorSound);
+    playSound(playErrorSound);
     await typeWriter(`[ОШИБКА] ${data.failText}... Совпадение: ${gameAttempts * 23}%. Продолжай.`, 'error');
     return false;
 }
@@ -492,13 +554,13 @@ let ticTacToeGameOver = false;
 function playerMove(index) {
     if (ticTacToeBoard[index] || ticTacToeGameOver) return;
     
-    playSound(typeSound);
+    playSound(playTypeSound);
     ticTacToeBoard[index] = 'X';
     updateTicTacToeBoard();
     
     if (checkWinner('X')) {
         ticTacToeGameOver = true;
-        playSound(successSound);
+        playSound(playSuccessSound);
         typeWriter('[ПОБЕДА] Ты победил ИИ!', 'success');
         setTimeout(() => nextLevel(), 2000);
         return;
@@ -506,7 +568,7 @@ function playerMove(index) {
     
     if (ticTacToeBoard.every(cell => cell)) {
         ticTacToeGameOver = true;
-        playSound(successSound);
+        playSound(playSuccessSound);
         typeWriter('[НИЧЬЯ] ИИ принимает результат.', 'success');
         setTimeout(() => nextLevel(), 2000);
         return;
@@ -518,12 +580,12 @@ function playerMove(index) {
 function aiMoveTicTacToe() {
     const move = getBestMove();
     ticTacToeBoard[move] = 'O';
-    playSound(typeSound);
+    playSound(playTypeSound);
     updateTicTacToeBoard();
     
     if (checkWinner('O')) {
         ticTacToeGameOver = true;
-        playSound(errorSound);
+        playSound(playErrorSound);
         typeWriter('[ПОРАЖЕНИЕ] ИИ победил.', 'error');
         totalAttempts.tictactoe++;
         setTimeout(async () => {
@@ -539,7 +601,7 @@ function aiMoveTicTacToe() {
     
     if (ticTacToeBoard.every(cell => cell)) {
         ticTacToeGameOver = true;
-        playSound(successSound);
+        playSound(playSuccessSound);
         typeWriter('[НИЧЬЯ] ИИ принимает результат.', 'success');
         setTimeout(() => nextLevel(), 2000);
     }
@@ -635,7 +697,7 @@ function flipCard(index) {
     if (memoryFlipped.length >= 2) return;
     if (memoryCards[index].flipped || memoryCards[index].matched) return;
     
-    playSound(typeSound);
+    playSound(playTypeSound);
     memoryCards[index].flipped = true;
     memoryFlipped.push(index);
     
@@ -656,7 +718,7 @@ function flipCard(index) {
             cards[first].classList.add('matched');
             cards[second].classList.add('matched');
             
-            playSound(successSound);
+            playSound(playSuccessSound);
             
             if (memoryMatched.length === SYMBOLS.length) {
                 typeWriter('[ПОБЕДА] Все пары найдены!', 'success');
@@ -677,7 +739,7 @@ function flipCard(index) {
         memoryFlipped = [];
         
         if (memoryMoves >= 20 && memoryMatched.length < SYMBOLS.length) {
-            playSound(errorSound);
+            playSound(playErrorSound);
             typeWriter('[ОШИБКА] Превышено количество попыток.', 'error');
             totalAttempts.memory++;
             setTimeout(async () => {
@@ -787,7 +849,7 @@ function fireAt(index) {
     if (seaBattleAIBoard[index] === 'hit' || seaBattleAIBoard[index] === 'miss') return;
     if (seaBattleShotsLeft <= 0) return;
     
-    playSound(typeSound);
+    playSound(playTypeSound);
     seaBattleShotsLeft--;
     
     const shotsInfo = document.getElementById('shots-info');
@@ -805,7 +867,7 @@ function fireAt(index) {
         if (ship) ship.hits++;
         
         if (seaBattleHits >= seaBattleTotalShips) {
-            playSound(successSound);
+            playSound(playSuccessSound);
             typeWriter('[ПОБЕДА] Все корабли потоплены!', 'success');
             setTimeout(() => nextLevel(), 2000);
             return;
@@ -818,7 +880,7 @@ function fireAt(index) {
     }
     
     if (seaBattleShotsLeft <= 0) {
-        playSound(errorSound);
+        playSound(playErrorSound);
         typeWriter('[ОШИБКА] Боезапас исчерпан. Корабли не потоплены.', 'error');
         totalAttempts.seabattle++;
         setTimeout(async () => {
@@ -871,11 +933,11 @@ async function checkTruthsLie(index) {
     hideGameBoard();
     
     if (index === data.lieIndex) {
-        playSound(successSound);
+        playSound(playSuccessSound);
         await typeWriter('[ПРАВИЛЬНО] Ты распознал ложь.', 'success');
         setTimeout(() => nextLevel(), 1500);
     } else {
-        playSound(errorSound);
+        playSound(playErrorSound);
         await typeWriter('[НЕВЕРНО] Это была правда.', 'error');
         await typeWriter('ИИ: "Не расстраивайся. Продолжаем..."', 'ai');
         setTimeout(() => nextLevel(), 2000);
@@ -890,12 +952,12 @@ async function checkCipherAnswer(answer) {
     const data = questData.find(q => q.id === 'cipher');
     
     if (answer.toUpperCase() === data.correctAnswer) {
-        playSound(successSound);
+        playSound(playSuccessSound);
         hideInput();
         await typeWriter(data.successText, 'success');
         setTimeout(() => nextLevel(), 1500);
     } else {
-        playSound(errorSound);
+        playSound(playErrorSound);
         await typeWriter(data.failText, 'error');
         showInput('[Попробуйте ещё раз]');
     }
@@ -927,7 +989,7 @@ async function startInvestigation(investigationId) {
                     const answer = userInput.value.trim();
                     if (!answer) return;
                     
-                    playSound(typeSound);
+                    playSound(playTypeSound);
                     await typeWriter(`> ${answer}`, 'system');
                     
                     if (question.acceptAny) {
@@ -941,7 +1003,7 @@ async function startInvestigation(investigationId) {
                         await typeWriter(question.successResponse, 'success');
                         resolve();
                     } else {
-                        playSound(errorSound);
+                        playSound(playErrorSound);
                         await typeWriter('[ОШИБКА] Неверный ответ. Попробуйте снова.', 'error');
                         userInput.value = '';
                     }
@@ -1048,9 +1110,7 @@ function init() {
     });
     
     document.addEventListener('click', () => {
-        if (bgSound.src && bgSound.paused) {
-            bgSound.play().catch(() => {});
-        }
+        playBgLoop();
     }, { once: true });
     
     startLevel();
