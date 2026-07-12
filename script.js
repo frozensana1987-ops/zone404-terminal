@@ -274,6 +274,7 @@ let seaBattleAIBoard = [];
 let seaBattleShips = [];
 let seaBattleHits = 0;
 let seaBattleTotalShips = 0;
+let seaBattleShotsLeft = 0;
 
 const logEl = document.getElementById('log');
 const inputArea = document.getElementById('input-area');
@@ -673,6 +674,7 @@ function initSeaBattle() {
     seaBattleShips = [];
     seaBattleHits = 0;
     seaBattleTotalShips = 0;
+    seaBattleShotsLeft = 20;
     
     const ships = [
         { size: 3, count: 1 },
@@ -690,6 +692,13 @@ function initSeaBattle() {
     placePlayerShips();
     
     gameBoard.innerHTML = '';
+    
+    const shotsInfo = document.createElement('div');
+    shotsInfo.id = 'shots-info';
+    shotsInfo.style.cssText = 'text-align: center; margin-bottom: 10px; color: var(--cyan); font-size: 14px;';
+    shotsInfo.textContent = `Выстрелов: ${seaBattleShotsLeft}`;
+    gameBoard.appendChild(shotsInfo);
+    
     const grid = document.createElement('div');
     grid.className = 'sea-battle';
     
@@ -752,8 +761,13 @@ function placePlayerShips() {
 
 function fireAt(index) {
     if (seaBattleAIBoard[index] === 'hit' || seaBattleAIBoard[index] === 'miss') return;
+    if (seaBattleShotsLeft <= 0) return;
     
     playSound(typeSound);
+    seaBattleShotsLeft--;
+    
+    const shotsInfo = document.getElementById('shots-info');
+    if (shotsInfo) shotsInfo.textContent = `Выстрелов: ${seaBattleShotsLeft}`;
     
     if (seaBattleAIBoard[index] === 'ship') {
         seaBattleAIBoard[index] = 'hit';
@@ -777,6 +791,21 @@ function fireAt(index) {
         const cell = gameBoard.querySelectorAll('.cell')[index];
         cell.classList.add('miss');
         cell.textContent = '·';
+    }
+    
+    if (seaBattleShotsLeft <= 0) {
+        playSound(errorSound);
+        typeWriter('[ОШИБКА] Боезапас исчерпан. Корабли не потоплены.', 'error');
+        totalAttempts.seabattle++;
+        setTimeout(async () => {
+            const bypass = await handleBiometricFail('seabattle');
+            if (bypass) {
+                nextLevel();
+            } else {
+                initSeaBattle();
+            }
+        }, 1500);
+        return;
     }
     
     setTimeout(aiFireSeaBattle, 800);
