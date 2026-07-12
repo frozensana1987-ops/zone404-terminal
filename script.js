@@ -94,6 +94,8 @@ const questData = [
                 acceptAny: false
             },
             {
+                image: 'assets/images/level2_1.jpg',
+                imageHint: '[АРХИВНОЕ ФОТО: Философский камень. Четвёрка друзей.]',
                 text: 'ВОПРОС 2: На Философском камне вас было четверо.\nНазови имя первого, кто вышел из зоны бармена.',
                 placeholder: '[Введите ответ]',
                 answers: ['машина', 'Машина', 'МАШИНА'],
@@ -854,6 +856,15 @@ async function startInvestigation(investigationId) {
     
     for (const question of data.questions) {
         await new Promise(r => setTimeout(r, 500));
+        
+        if (question.image) {
+            await typeWriter(`image:${question.image}`, 'image');
+            if (question.imageHint) {
+                await typeWriter(question.imageHint, 'system');
+            }
+            await new Promise(r => setTimeout(r, 500));
+        }
+        
         await typeWriter(question.text, 'question');
         showInput(question.placeholder);
         
