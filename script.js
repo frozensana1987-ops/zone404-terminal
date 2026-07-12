@@ -289,74 +289,87 @@ function getAudioContext() {
     if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     }
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
     return audioCtx;
 }
 
 function initAudio() {
     document.addEventListener('click', () => {
-        getAudioContext();
+        const ctx = getAudioContext();
+        ctx.resume();
+    }, { once: true });
+    
+    document.addEventListener('keydown', () => {
+        const ctx = getAudioContext();
+        ctx.resume();
     }, { once: true });
 }
 
 function playTypeSound() {
     try {
         const ctx = getAudioContext();
+        if (ctx.state !== 'running') return;
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.frequency.value = 800 + Math.random() * 400;
         osc.type = 'square';
-        gain.gain.value = 0.05;
+        gain.gain.setValueAtTime(0.08, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
         osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.05);
+        osc.stop(ctx.currentTime + 0.06);
     } catch(e) {}
 }
 
 function playErrorSound() {
     try {
         const ctx = getAudioContext();
+        if (ctx.state !== 'running') return;
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.frequency.value = 200;
         osc.type = 'sawtooth';
-        gain.gain.value = 0.15;
+        gain.gain.setValueAtTime(0.2, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
         osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.3);
+        osc.stop(ctx.currentTime + 0.35);
     } catch(e) {}
 }
 
 function playSuccessSound() {
     try {
         const ctx = getAudioContext();
+        if (ctx.state !== 'running') return;
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.connect(gain);
         gain.connect(ctx.destination);
-        osc.frequency.value = 600;
-        osc.type = 'sine';
-        gain.gain.value = 0.15;
+        osc.frequency.setValueAtTime(600, ctx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.15);
+        osc.type = 'sine';
+        gain.gain.setValueAtTime(0.2, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
         osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.4);
+        osc.stop(ctx.currentTime + 0.45);
     } catch(e) {}
 }
 
 function playBgLoop() {
     try {
         const ctx = getAudioContext();
+        if (ctx.state !== 'running') return;
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.frequency.value = 55;
         osc.type = 'sine';
-        gain.gain.value = 0.06;
+        gain.gain.value = 0.08;
         osc.start();
         window._bgOsc = osc;
         window._bgGain = gain;
@@ -365,7 +378,9 @@ function playBgLoop() {
 
 function playSound(sound) {
     if (typeof sound === 'function') {
-        sound();
+        try {
+            sound();
+        } catch(e) {}
     }
 }
 
