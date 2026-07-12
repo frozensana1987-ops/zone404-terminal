@@ -289,6 +289,11 @@ const errorSound = document.getElementById('errorSound');
 const successSound = document.getElementById('successSound');
 
 function initAudio() {
+    bgSound.src = 'assets/audio/loop.wav';
+    typeSound.src = 'assets/audio/typewriter.wav';
+    errorSound.src = 'assets/audio/error.wav';
+    successSound.src = 'assets/audio/success.wav';
+    
     bgSound.volume = 0.3;
     typeSound.volume = 0.5;
     errorSound.volume = 0.5;
