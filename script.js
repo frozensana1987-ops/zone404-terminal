@@ -81,7 +81,9 @@ const questData = [
             { text: 'Интересно... Этот терминал принадлежал человеку', class: 'ai' },
             { text: 'по кодовому имени "СУБЪЕКТ-А".', class: 'ai' },
             { text: 'Давай проверим, не связан ли ты с ним.', class: 'ai' },
-            { text: '────────────────────────────────────────', class: 'divider' }
+            { text: '────────────────────────────────────────', class: 'divider' },
+            { text: 'image:assets/images/level2.jpg', class: 'image' },
+            { text: '[АРХИВНОЕ ФОТО: СУБЪЕКТ-А. Лесной паркет. Дата неизвестна.]', class: 'system' }
         ],
         questions: [
             {
@@ -164,7 +166,9 @@ const questData = [
             { text: 'Его последний проект: "Неоновая Академия-2077".', class: 'ai' },
             { text: 'Похоже, он оставил кое-что для того,', class: 'ai' },
             { text: 'кто сможет пройти все проверки.', class: 'ai' },
-            { text: '────────────────────────────────────────', class: 'divider' }
+            { text: '────────────────────────────────────────', class: 'divider' },
+            { text: 'image:assets/images/level2.jpg', class: 'image' },
+            { text: '[АРХИВНОЕ ФОТО: СУБЪЕКТ-А. Дикий Урал.]', class: 'system' }
         ],
         questions: [
             {
