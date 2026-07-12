@@ -23,13 +23,13 @@ const questData = [
         id: 'tictactoe',
         type: 'game',
         gameName: 'tictactoe',
-        title: 'ДИАГНОСТИКА #1: КЛАССИЧЕСКАЯ ИГРА',
+        title: 'ДИАГНОСТИКА #1: ПРОТОКОЛ ВЗАИМОДЕЙСТВИЯ',
         description: [
-            'Протокол: Крестики-нолики.',
-            'Цель: Победить или зафиксировать ничью.',
+            'Режим: Крестики-нолики.',
+            'Результат: Победа или ничья.',
             '',
             'Правила:',
-            '- Играйте крестиками (X)',
+            '- Вы играете крестиками (X)',
             '- ИИ играет ноликами (O)',
             '- Кликните на клетку для хода',
             '',
@@ -54,7 +54,7 @@ const questData = [
         gameName: 'memory',
         title: 'ДИАГНОСТИКА #2: ТЕСТ ПАМЯТИ',
         description: [
-            'Протокол: Игра "Память".',
+            'Протокол: Память.',
             'Сетка 4x4. Найди все пары.',
             'Попыток: 20.',
             '',
@@ -110,18 +110,19 @@ const questData = [
         id: 'seabattle',
         type: 'game',
         gameName: 'seabattle',
-        title: 'ДИАГНОСТИКА #3: СТРАТЕГИЧЕСКАЯ ИГРА',
+        title: 'ДИАГНОСТИКА #3: ПРОТОКОЛ СТРАТЕГИИ',
         description: [
-            'Протокол: Морской бой.',
+            'Режим: Морской бой.',
             'Поле: 6x6.',
+            'Выстрелов: 20.',
             '',
-            'Твои корабли:',
+            'Размещение ИИ:',
             '- 1x [■■■] (3 клетки)',
             '- 2x [■■] (2 клетки)',
             '- 1x [■] (1 клетка)',
             '',
             'Кликните на клетку для выстрела.',
-            'Цель: потопить все корабли ИИ.'
+            'Задача: потопить все корабли.'
         ],
         biometric: {
             attempts: 3,
@@ -323,6 +324,17 @@ function addLogEntry(text, className = '') {
 
 async function typeWriter(text, className = '', speed = 25) {
     return new Promise((resolve) => {
+        if (text.startsWith('image:')) {
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${className}`;
+            const imgPath = text.replace('image:', '');
+            entry.innerHTML = `<img src="${imgPath}" alt="image" style="max-width:100%;max-height:300px;border:1px solid #004400;border-radius:4px;" onerror="this.style.display='none'">`;
+            logEl.appendChild(entry);
+            logEl.scrollTop = logEl.scrollHeight;
+            resolve();
+            return;
+        }
+        
         const entry = document.createElement('div');
         entry.className = `log-entry ${className}`;
         logEl.appendChild(entry);
