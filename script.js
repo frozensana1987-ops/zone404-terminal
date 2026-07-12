@@ -345,6 +345,7 @@ async function typeWriter(text, className = '', speed = 25) {
         logEl.appendChild(entry);
         
         let i = 0;
+        let lastSoundTime = 0;
         const cursor = document.createElement('span');
         cursor.className = 'cursor';
         cursor.textContent = '█';
@@ -355,6 +356,12 @@ async function typeWriter(text, className = '', speed = 25) {
                 entry.insertBefore(document.createTextNode(text[i]), cursor);
                 i++;
                 logEl.scrollTop = logEl.scrollHeight;
+                
+                const now = Date.now();
+                if (now - lastSoundTime > 80 && text[i-1] !== ' ') {
+                    playSound(typeSound);
+                    lastSoundTime = now;
+                }
             } else {
                 clearInterval(interval);
                 cursor.remove();
