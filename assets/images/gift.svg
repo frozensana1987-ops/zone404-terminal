@@ -94,7 +94,6 @@
   <rect x="290" y="260" width="90" height="60" rx="2" fill="#001a1a" stroke="#00ffff" stroke-width="1" filter="url(#glow4)"/>
   <text x="335" y="280" font-family="monospace" font-size="9" fill="#00ffff" text-anchor="middle" filter="url(#neonglow)">ARC FORGE</text>
   <text x="335" y="295" font-family="monospace" font-size="9" fill="#00ffff" text-anchor="middle" filter="url(#neonglow)">2077</text>
-  <text x="335" y="310" font-family="monospace" font-size="8" fill="#008888" text-anchor="middle">-2077-</text>
   
   <rect x="150" y="355" width="230" height="30" rx="4" fill="#0a0a0a" stroke="#00ffff" stroke-width="2" filter="url(#neonglow)"/>
   <text x="265" y="375" font-family="monospace" font-size="12" fill="#00ffff" text-anchor="middle" filter="url(#neonglow)">СВАРОЧНЫЙ КОМПЛЕКС</text>

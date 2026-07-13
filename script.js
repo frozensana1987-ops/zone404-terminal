@@ -220,7 +220,7 @@ const questData = [
             { text: 'ПОЛУЧЕНИЕ ПРОТОТИПА', class: 'success' },
             { text: '═══════════════════════════════════════════', class: 'divider' },
             { text: '', class: 'system' },
-            { text: 'image:assets/images/gift.svg', class: 'image' },
+            { text: 'image:assets/images/gift_v4.svg', class: 'image' },
             { text: '', class: 'system' },
             { text: '╔═══════════════════════════════════════════╗', class: 'ai' },
             { text: '║  ОБЪЕКТ: СВАРОЧНЫЙ КОМПЛЕКС              ║', class: 'ai' },
