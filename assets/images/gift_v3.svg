@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="500" height="400">
+  <defs>
+    <linearGradient id="body3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1f1f1f"/>
+      <stop offset="40%" style="stop-color:#2a2a2a"/>
+      <stop offset="100%" style="stop-color:#0f0f0f"/>
+    </linearGradient>
+    <linearGradient id="rust3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3a2a1a"/>
+      <stop offset="100%" style="stop-color:#1a1a1a"/>
+    </linearGradient>
+    <linearGradient id="fire3" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff4400"/>
+      <stop offset="50%" style="stop-color:#ffaa00"/>
+      <stop offset="100%" style="stop-color:#ffff00"/>
+    </linearGradient>
+    <filter id="glow3">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="fireglow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  
+  <rect width="500" height="400" fill="#080808"/>
+  
+  <rect x="100" y="50" width="280" height="220" rx="6" fill="url(#body3)" stroke="#444" stroke-width="3"/>
+  
+  <rect x="110" y="55" width="260" height="8" fill="#333"/>
+  <rect x="110" y="55" width="180" height="8" fill="#ff4400" opacity="0.6"/>
+  
+  <rect x="120" y="75" width="110" height="55" rx="4" fill="#0a0a0a" stroke="#ff4400" stroke-width="2"/>
+  <text x="175" y="95" font-family="monospace" font-size="14" fill="#ff4400" text-anchor="middle" filter="url(#glow3)">PATRIOT</text>
+  <text x="175" y="110" font-family="monospace" font-size="9" fill="#cc6600" text-anchor="middle">WM-181 SMART</text>
+  <text x="175" y="122" font-family="monospace" font-size="7" fill="#884400" text-anchor="middle">7.2kW | 180A</text>
+  
+  <rect x="250" y="75" width="120" height="55" rx="4" fill="#0a0a0a" stroke="#ff6600" stroke-width="2"/>
+  <circle cx="310" cy="102" r="22" fill="#111" stroke="#ff4400" stroke-width="2"/>
+  <circle cx="310" cy="102" r="15" fill="#ff2200" filter="url(#glow3)" opacity="0.7"/>
+  <text x="310" y="106" font-family="monospace" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">180A</text>
+  
+  <rect x="120" y="140" width="250" height="45" rx="3" fill="#111" stroke="#555" stroke-width="1"/>
+  <rect x="130" y="148" width="40" height="30" rx="2" fill="#1a0a00" stroke="#ff4400" stroke-width="1"/>
+  <text x="150" y="167" font-family="monospace" font-size="7" fill="#ff4400" text-anchor="middle">MMA</text>
+  <rect x="180" y="148" width="40" height="30" rx="2" fill="#1a0a00" stroke="#ff4400" stroke-width="1"/>
+  <text x="200" y="167" font-family="monospace" font-size="7" fill="#ff4400" text-anchor="middle">TIG</text>
+  <rect x="230" y="148" width="40" height="30" rx="2" fill="#1a0a00" stroke="#ff4400" stroke-width="1"/>
+  <text x="250" y="167" font-family="monospace" font-size="7" fill="#ff4400" text-anchor="middle">CUT</text>
+  <rect x="280" y="148" width="40" height="30" rx="2" fill="#0a0a1a" stroke="#4488ff" stroke-width="1"/>
+  <text x="300" y="167" font-family="monospace" font-size="7" fill="#4488ff" text-anchor="middle">PULSE</text>
+  <rect x="330" y="148" width="30" height="30" rx="2" fill="#0a1a0a" stroke="#44ff44" stroke-width="1"/>
+  <text x="345" y="167" font-family="monospace" font-size="7" fill="#44ff44" text-anchor="middle">OK</text>
+  
+  <rect x="120" y="195" width="250" height="60" rx="3" fill="#0a0a0a" stroke="#333" stroke-width="1"/>
+  <polyline points="130,230 150,210 170,240 190,200 210,235 230,215 250,245 270,205 290,225 310,210 330,235 350,220 360,230" fill="none" stroke="#ff4400" stroke-width="2" filter="url(#glow3)"/>
+  <line x1="130" y1="225" x2="360" y2="225" stroke="#333" stroke-width="0.5"/>
+  
+  <path d="M 380 100 Q 420 100 430 140 L 440 280 Q 440 300 420 310 L 400 310" fill="none" stroke="#222" stroke-width="16" stroke-linecap="round"/>
+  <path d="M 380 100 Q 420 100 430 140 L 440 280 Q 440 300 420 310 L 400 310" fill="none" stroke="#ff4400" stroke-width="3" filter="url(#glow3)" opacity="0.5"/>
+  
+  <circle cx="400" cy="310" r="12" fill="#222" stroke="#ff4400" stroke-width="3"/>
+  <circle cx="400" cy="310" r="6" fill="#ff4400" filter="url(#glow3)"/>
+  
+  <ellipse cx="400" cy="310" rx="25" ry="8" fill="#ff4400" filter="url(#fireglow)" opacity="0.3"/>
+  
+  <circle cx="410" cy="295" r="2" fill="#ffff00" filter="url(#glow3)"/>
+  <circle cx="420" cy="300" r="1.5" fill="#ffaa00" filter="url(#glow3)"/>
+  <circle cx="415" cy="285" r="1" fill="#ffff00" filter="url(#glow3)"/>
+  
+  <rect x="130" y="270" width="240" height="35" rx="4" fill="#0a0a0a" stroke="#ff4400" stroke-width="2" filter="url(#glow3)"/>
+  <text x="250" y="285" font-family="monospace" font-size="10" fill="#ff4400" text-anchor="middle" filter="url(#glow3)">ARC FORGE 2077</text>
+  <text x="250" y="298" font-family="monospace" font-size="7" fill="#cc6600" text-anchor="middle">EXPERIMENTAL WELDING SYSTEM</text>
+  
+  <rect x="160" y="315" width="180" height="20" rx="2" fill="#111" stroke="#ff4400" stroke-width="1"/>
+  <text x="250" y="330" font-family="monospace" font-size="8" fill="#ff4400" text-anchor="middle">СВАРОЧНЫЙ КОМПЛЕКС v2.077</text>
+  
+  <text x="250" y="360" font-family="monospace" font-size="9" fill="#ff4400" text-anchor="middle" filter="url(#glow3)">PATRIOT × DORA INDUSTRIES</text>
+  <text x="250" y="380" font-family="monospace" font-size="7" fill="#663300" text-anchor="middle">PROTOTYPE SERIAL: NR-2077-X</text>
+  
+  <line x1="80" y1="390" x2="420" y2="390" stroke="#333" stroke-width="1"/>
+</svg>

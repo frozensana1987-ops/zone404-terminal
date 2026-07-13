@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="500" height="400">
+  <defs>
+    <linearGradient id="body1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a"/>
+      <stop offset="50%" style="stop-color:#2d2d2d"/>
+      <stop offset="100%" style="stop-color:#0a0a0a"/>
+    </linearGradient>
+    <linearGradient id="cyan1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ffff;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#0088aa;stop-opacity:0.6"/>
+    </linearGradient>
+    <filter id="glow1">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow1">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  
+  <rect width="500" height="400" fill="#0a0a0a"/>
+  
+  <rect x="120" y="60" width="260" height="200" rx="8" fill="url(#body1)" stroke="#333" stroke-width="2" filter="url(#shadow1)"/>
+  
+  <rect x="140" y="80" width="100" height="60" rx="4" fill="#001a1a" stroke="url(#cyan1)" stroke-width="2"/>
+  <rect x="150" y="90" width="80" height="40" rx="2" fill="#002222"/>
+  <text x="190" y="115" font-family="monospace" font-size="10" fill="#00ffff" text-anchor="middle" filter="url(#glow1)">PATRIOT</text>
+  <text x="190" y="128" font-family="monospace" font-size="8" fill="#00aa88" text-anchor="middle">WM-181 SMART</text>
+  
+  <rect x="260" y="80" width="100" height="60" rx="4" fill="#001a1a" stroke="url(#cyan1)" stroke-width="2"/>
+  <circle cx="310" cy="110" r="20" fill="#001111" stroke="#00ffff" stroke-width="2"/>
+  <circle cx="310" cy="110" r="12" fill="#00ffff" filter="url(#glow1)" opacity="0.8"/>
+  <text x="310" y="114" font-family="monospace" font-size="8" fill="#000" text-anchor="middle">180A</text>
+  
+  <rect x="140" y="150" width="220" height="40" rx="3" fill="#111" stroke="#444" stroke-width="1"/>
+  <rect x="150" y="155" width="50" height="30" rx="2" fill="#002200" stroke="#00ff00" stroke-width="1"/>
+  <text x="175" y="174" font-family="monospace" font-size="8" fill="#00ff00" text-anchor="middle">POWER</text>
+  <rect x="210" y="155" width="50" height="30" rx="2" fill="#002200" stroke="#00ff00" stroke-width="1"/>
+  <text x="235" y="174" font-family="monospace" font-size="8" fill="#00ff00" text-anchor="middle">ARC</text>
+  <rect x="270" y="155" width="50" height="30" rx="2" fill="#220000" stroke="#ff0044" stroke-width="1"/>
+  <text x="295" y="174" font-family="monospace" font-size="8" fill="#ff0044" text-anchor="middle">TEMP</text>
+  <rect x="330" y="155" width="30" height="30" rx="2" fill="#001122" stroke="#00aaff" stroke-width="1"/>
+  <text x="345" y="174" font-family="monospace" font-size="8" fill="#00aaff" text-anchor="middle">7kW</text>
+  
+  <rect x="140" y="200" width="220" height="50" rx="4" fill="#0a0a0a" stroke="#333" stroke-width="1"/>
+  <line x1="150" y1="210" x2="350" y2="210" stroke="#00ffff" stroke-width="1" opacity="0.3"/>
+  <polyline points="150,230 170,220 190,235 210,215 230,240 250,225 270,230 290,210 310,235 330,220 350,230" fill="none" stroke="#00ffff" stroke-width="2" filter="url(#glow1)"/>
+  
+  <path d="M 380 120 Q 420 120 420 160 L 420 280 Q 420 300 400 300 L 380 300" fill="none" stroke="#222" stroke-width="12" stroke-linecap="round"/>
+  <path d="M 380 120 Q 420 120 420 160 L 420 280 Q 420 300 400 300 L 380 300" fill="none" stroke="#00ffff" stroke-width="2" filter="url(#glow1)" opacity="0.6"/>
+  
+  <circle cx="380" cy="300" r="8" fill="#00ffff" filter="url(#glow1)"/>
+  <circle cx="380" cy="300" r="4" fill="#fff"/>
+  
+  <rect x="160" y="270" width="180" height="25" rx="3" fill="#111" stroke="#00ffff" stroke-width="1"/>
+  <text x="250" y="287" font-family="monospace" font-size="10" fill="#00ffff" text-anchor="middle" filter="url(#glow1)">ARC FORGE 2077</text>
+  
+  <rect x="180" y="310" width="140" height="15" rx="2" fill="#001100"/>
+  <text x="250" y="322" font-family="monospace" font-size="7" fill="#00ff00" text-anchor="middle">INVERTOR WELDING SYSTEM</text>
+  
+  <text x="250" y="360" font-family="monospace" font-size="11" fill="#00ffff" text-anchor="middle" filter="url(#glow1)">СВАРОЧНЫЙ КОМПЛЕКС v2.077</text>
+  <text x="250" y="380" font-family="monospace" font-size="8" fill="#005555" text-anchor="middle">PATRIOT × DORA INDUSTRIES</text>
+  
+  <line x1="50" y1="390" x2="450" y2="390" stroke="#003333" stroke-width="1"/>
+</svg>

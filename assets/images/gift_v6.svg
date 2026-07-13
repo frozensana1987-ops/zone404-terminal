@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 450" width="500" height="450">
+  <defs>
+    <linearGradient id="body6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="50%" style="stop-color:#16213e"/>
+      <stop offset="100%" style="stop-color:#0f0f1a"/>
+    </linearGradient>
+    <linearGradient id="holo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ffff;stop-opacity:0.8"/>
+      <stop offset="33%" style="stop-color:#ff00ff;stop-opacity:0.6"/>
+      <stop offset="66%" style="stop-color:#00ff88;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#00ffff;stop-opacity:0.6"/>
+    </linearGradient>
+    <filter id="glow6">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="hologlow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  
+  <rect width="500" height="450" fill="#050510"/>
+  
+  <polygon points="140,80 380,80 400,100 400,320 380,340 140,340 120,320 120,100" fill="url(#body6)" stroke="url(#holo)" stroke-width="2"/>
+  
+  <rect x="145" y="85" width="230" height="8" fill="#0a0a1a"/>
+  <rect x="145" y="85" width="200" height="8" fill="url(#holo)" opacity="0.4" filter="url(#glow6)"/>
+  
+  <polygon points="140,80 380,80 395,95 125,95" fill="#0f0f1a" stroke="url(#holo)" stroke-width="1"/>
+  
+  <path d="M 160,70 C 160,50 180,45 200,50 L 220,55 C 230,57 235,65 235,75 L 235,80" fill="none" stroke="#ff00ff" stroke-width="5" stroke-linecap="round"/>
+  <path d="M 270,70 C 270,50 290,45 310,50 L 330,55 C 340,57 345,65 345,75 L 345,80" fill="none" stroke="#00ffff" stroke-width="5" stroke-linecap="round"/>
+  
+  <rect x="135" y="100" width="130" height="230" rx="4" fill="#0a0a1a" stroke="url(#holo)" stroke-width="1"/>
+  
+  <rect x="145" y="110" width="60" height="25" rx="3" fill="#0a0a2a" stroke="url(#holo)" stroke-width="2" filter="url(#glow6)"/>
+  <text x="175" y="127" font-family="monospace" font-size="11" fill="url(#holo)" text-anchor="middle" filter="url(#hologlow)">PATRIOT</text>
+  
+  <rect x="145" y="140" width="60" height="15" rx="2" fill="#05051a"/>
+  <text x="175" y="152" font-family="monospace" font-size="7" fill="#00aaaa" text-anchor="middle">WM 181 Smart</text>
+  
+  <circle cx="175" cy="190" r="28" fill="#05051a" stroke="url(#holo)" stroke-width="2"/>
+  <circle cx="175" cy="190" r="22" fill="#0a0a2a" stroke="#333" stroke-width="1"/>
+  <circle cx="175" cy="190" r="8" fill="url(#holo)" filter="url(#hologlow)"/>
+  
+  <text x="150" y="170" font-family="monospace" font-size="6" fill="#00ffff">20</text>
+  <text x="195" y="170" font-family="monospace" font-size="6" fill="#ff00ff">90</text>
+  <text x="200" y="215" font-family="monospace" font-size="6" fill="#00ff88">180</text>
+  <text x="150" y="215" font-family="monospace" font-size="6" fill="#00ffff">50</text>
+  <text x="175" y="235" font-family="monospace" font-size="8" fill="url(#holo)" text-anchor="middle">A</text>
+  
+  <circle cx="155" cy="122" r="4" fill="#00ff88" filter="url(#glow6)"/>
+  <circle cx="170" cy="122" r="4" fill="#ff00ff" filter="url(#glow6)"/>
+  
+  <g transform="translate(145, 250)">
+    <circle cx="8" cy="8" r="5" fill="none" stroke="#00ffff" stroke-width="1" opacity="0.3"/>
+    <circle cx="22" cy="8" r="5" fill="none" stroke="#ff00ff" stroke-width="1" opacity="0.3"/>
+    <circle cx="36" cy="8" r="5" fill="none" stroke="#00ff88" stroke-width="1" opacity="0.3"/>
+    <circle cx="8" cy="22" r="5" fill="none" stroke="#ff00ff" stroke-width="1" opacity="0.3"/>
+    <circle cx="22" cy="22" r="5" fill="none" stroke="#00ff88" stroke-width="1" opacity="0.3"/>
+    <circle cx="36" cy="22" r="5" fill="none" stroke="#00ffff" stroke-width="1" opacity="0.3"/>
+    <circle cx="8" cy="36" r="5" fill="none" stroke="#00ff88" stroke-width="1" opacity="0.3"/>
+    <circle cx="22" cy="36" r="5" fill="none" stroke="#00ffff" stroke-width="1" opacity="0.3"/>
+    <circle cx="36" cy="36" r="5" fill="none" stroke="#ff00ff" stroke-width="1" opacity="0.3"/>
+    <circle cx="8" cy="50" r="5" fill="none" stroke="#00ffff" stroke-width="1" opacity="0.3"/>
+    <circle cx="22" cy="50" r="5" fill="none" stroke="#ff00ff" stroke-width="1" opacity="0.3"/>
+    <circle cx="36" cy="50" r="5" fill="none" stroke="#00ff88" stroke-width="1" opacity="0.3"/>
+  </g>
+  
+  <rect x="145" y="320" width="40" height="12" rx="2" fill="#1a0022" stroke="#ff00ff" stroke-width="1"/>
+  <circle cx="155" cy="326" r="3" fill="#ff00ff" filter="url(#glow6)"/>
+  <text x="165" y="329" font-family="monospace" font-size="5" fill="#ff00ff">+</text>
+  
+  <rect x="195" y="320" width="40" height="12" rx="2" fill="#001a1a" stroke="#00ffff" stroke-width="1"/>
+  <circle cx="205" cy="326" r="3" fill="#00ffff" filter="url(#glow6)"/>
+  <text x="215" y="329" font-family="monospace" font-size="5" fill="#00ffff">-</text>
+  
+  <rect x="280" y="100" width="110" height="230" rx="4" fill="#0a0a1a" stroke="#333" stroke-width="1"/>
+  
+  <rect x="290" y="110" width="90" height="40" rx="3" fill="#05051a" stroke="url(#holo)" stroke-width="1"/>
+  <text x="335" y="128" font-family="monospace" font-size="14" fill="url(#holo)" text-anchor="middle" filter="url(#hologlow)">PATRIOT</text>
+  <text x="335" y="143" font-family="monospace" font-size="8" fill="#00aaaa" text-anchor="middle">WM 181 Smart</text>
+  
+  <text x="295" y="170" font-family="monospace" font-size="7" fill="#006666">АППАРАТ СВАРОЧНЫЙ</text>
+  <text x="295" y="182" font-family="monospace" font-size="7" fill="#006666">ИНВЕРТОРНЫЙ</text>
+  
+  <line x1="290" y1="190" x2="380" y2="190" stroke="url(#holo)" stroke-width="0.5" opacity="0.3"/>
+  
+  <rect x="290" y="200" width="90" height="50" rx="2" fill="#05051a" stroke="#333" stroke-width="1"/>
+  <text x="335" y="215" font-family="monospace" font-size="6" fill="url(#holo)" text-anchor="middle">+50°C</text>
+  <text x="335" y="228" font-family="monospace" font-size="6" fill="url(#holo)" text-anchor="middle">60%</text>
+  <text x="335" y="241" font-family="monospace" font-size="6" fill="url(#holo)" text-anchor="middle">IP21</text>
+  
+  <rect x="290" y="260" width="90" height="60" rx="2" fill="#0a0a2a" stroke="url(#holo)" stroke-width="1" filter="url(#glow6)"/>
+  <text x="335" y="280" font-family="monospace" font-size="9" fill="url(#holo)" text-anchor="middle" filter="url(#hologlow)">ARC FORGE</text>
+  <text x="335" y="295" font-family="monospace" font-size="9" fill="url(#holo)" text-anchor="middle" filter="url(#hologlow)">2077</text>
+  <text x="335" y="310" font-family="monospace" font-size="8" fill="#00aaaa" text-anchor="middle">-2077-</text>
+  
+  <rect x="150" y="355" width="230" height="30" rx="4" fill="#05051a" stroke="url(#holo)" stroke-width="2" filter="url(#hologlow)"/>
+  <text x="265" y="375" font-family="monospace" font-size="12" fill="url(#holo)" text-anchor="middle" filter="url(#hologlow)">СВАРОЧНЫЙ КОМПЛЕКС</text>
+  
+  <text x="265" y="405" font-family="monospace" font-size="9" fill="#00aaaa" text-anchor="middle">RESEARCH PROTOTYPE v2.077</text>
+  <text x="265" y="425" font-family="monospace" font-size="7" fill="#005555" text-anchor="middle">PATRIOT × DORA INDUSTRIES</text>
+</svg>
