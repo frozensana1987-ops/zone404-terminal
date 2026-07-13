@@ -1043,6 +1043,7 @@ async function startLevel() {
     hideInput();
     hideGameBoard();
     hideButtons();
+    hide3D();
     gameAttempts = 0;
     ticTacToeGameOver = false;
     ticTacToeBoard = Array(9).fill(null);
@@ -1088,8 +1089,10 @@ async function startLevel() {
             break;
             
         case 'ending':
+            hide3D();
             await typeLines(data.lines);
-            showButtons([{ text: 'НАЧАТЬ СНАЧАЛА', primary: true, action: () => restart() }]);
+            setTimeout(() => init3D(), 500);
+            showButtons([{ text: 'НАЧАТЬ СНАЧАЛА', primary: true, action: () => { hide3D(); restart(); } }]);
             break;
     }
 }
@@ -1132,3 +1135,313 @@ function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+let scene3d, camera3d, renderer3d, welder3d;
+let isRotating3d = true;
+
+function init3D() {
+    const container = document.getElementById('model-container');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    container.style.display = 'block';
+    
+    scene3d = new THREE.Scene();
+    scene3d.fog = new THREE.Fog(0x000000, 5, 15);
+    
+    camera3d = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera3d.position.set(0, 0.5, 4);
+    camera3d.lookAt(0, 0, 0);
+    
+    renderer3d = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer3d.setSize(container.clientWidth, container.clientHeight);
+    renderer3d.setPixelRatio(window.devicePixelRatio);
+    renderer3d.setClearColor(0x000000, 0);
+    container.appendChild(renderer3d.domElement);
+    
+    const ambientLight = new THREE.AmbientLight(0x222222);
+    scene3d.add(ambientLight);
+    
+    const pointLight1 = new THREE.PointLight(0x00ffff, 1, 10);
+    pointLight1.position.set(3, 3, 3);
+    scene3d.add(pointLight1);
+    
+    const pointLight2 = new THREE.PointLight(0x00ffff, 0.5, 10);
+    pointLight2.position.set(-3, 2, -3);
+    scene3d.add(pointLight2);
+    
+    const pointLight3 = new THREE.PointLight(0x008888, 0.3, 10);
+    pointLight3.position.set(0, -2, 3);
+    scene3d.add(pointLight3);
+    
+    welder3d = new THREE.Group();
+    
+    const bodyMat = new THREE.MeshPhongMaterial({ color: 0x1a1a1a, specular: 0x00ffff, shininess: 30 });
+    const accentMat = new THREE.MeshPhongMaterial({ color: 0x00ffff, emissive: 0x00ffff, emissiveIntensity: 0.5 });
+    const darkMat = new THREE.MeshPhongMaterial({ color: 0x0a0a0a, specular: 0x004444, shininess: 20 });
+    const orangeMat = new THREE.MeshPhongMaterial({ color: 0xff6600, emissive: 0xff6600, emissiveIntensity: 0.3 });
+    const redMat = new THREE.MeshPhongMaterial({ color: 0xff0044, emissive: 0xff0044, emissiveIntensity: 0.5 });
+    const screenMat = new THREE.MeshPhongMaterial({ color: 0x001a1a, emissive: 0x00ffff, emissiveIntensity: 0.3, transparent: true, opacity: 0.9 });
+    
+    const body = new THREE.Mesh(new THREE.BoxGeometry(2, 1.3, 1.1), bodyMat);
+    welder3d.add(body);
+    
+    const topPanel = new THREE.Mesh(new THREE.BoxGeometry(2.02, 0.05, 1.12), darkMat);
+    topPanel.position.y = 0.675;
+    welder3d.add(topPanel);
+    
+    const bottomPanel = new THREE.Mesh(new THREE.BoxGeometry(2.02, 0.05, 1.12), darkMat);
+    bottomPanel.position.y = -0.675;
+    welder3d.add(bottomPanel);
+    
+    const frontPanel = new THREE.Mesh(new THREE.BoxGeometry(0.05, 1.2, 1.05), darkMat);
+    frontPanel.position.x = -1.025;
+    welder3d.add(frontPanel);
+    
+    const backPanel = new THREE.Mesh(new THREE.BoxGeometry(0.05, 1.2, 1.05), darkMat);
+    backPanel.position.x = 1.025;
+    welder3d.add(backPanel);
+    
+    const sidePanel1 = new THREE.Mesh(new THREE.BoxGeometry(1.95, 1.2, 0.05), darkMat);
+    sidePanel1.position.z = 0.525;
+    welder3d.add(sidePanel1);
+    
+    const sidePanel2 = new THREE.Mesh(new THREE.BoxGeometry(1.95, 1.2, 0.05), darkMat);
+    sidePanel2.position.z = -0.525;
+    welder3d.add(sidePanel2);
+    
+    const knobBase = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.1, 32), darkMat);
+    knobBase.rotation.z = Math.PI / 2;
+    knobBase.position.set(-1.08, 0.15, 0);
+    welder3d.add(knobBase);
+    
+    const knobRing = new THREE.Mesh(new THREE.TorusGeometry(0.15, 0.02, 8, 32), accentMat);
+    knobRing.rotation.z = Math.PI / 2;
+    knobRing.position.set(-1.12, 0.15, 0);
+    welder3d.add(knobRing);
+    
+    const knobCenter = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.12, 32), accentMat);
+    knobCenter.rotation.z = Math.PI / 2;
+    knobCenter.position.set(-1.14, 0.15, 0);
+    welder3d.add(knobCenter);
+    
+    const knobIndicator = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.08, 0.02), accentMat);
+    knobIndicator.position.set(-1.2, 0.15, 0);
+    welder3d.add(knobIndicator);
+    
+    const screen = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.5, 0.7), screenMat);
+    screen.position.set(-1.04, 0.25, 0);
+    welder3d.add(screen);
+    
+    const screenFrame = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.55, 0.75), accentMat);
+    screenFrame.position.set(-1.06, 0.25, 0);
+    welder3d.add(screenFrame);
+    
+    const ledGreen = new THREE.Mesh(new THREE.SphereGeometry(0.03, 16, 16), new THREE.MeshPhongMaterial({ color: 0x00ff00, emissive: 0x00ff00, emissiveIntensity: 1 }));
+    ledGreen.position.set(-1.08, 0.55, 0.2);
+    welder3d.add(ledGreen);
+    
+    const ledOrange = new THREE.Mesh(new THREE.SphereGeometry(0.03, 16, 16), new THREE.MeshPhongMaterial({ color: 0xffaa00, emissive: 0xffaa00, emissiveIntensity: 1 }));
+    ledOrange.position.set(-1.08, 0.55, 0.1);
+    welder3d.add(ledOrange);
+    
+    for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < 3; j++) {
+            const hole = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.06, 8), darkMat);
+            hole.rotation.z = Math.PI / 2;
+            hole.position.set(-1.02, -0.3 + j * 0.12, -0.2 + i * 0.1);
+            welder3d.add(hole);
+        }
+    }
+    
+    const termPlus = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.15, 16), redMat);
+    termPlus.rotation.z = Math.PI / 2;
+    termPlus.position.set(-1.08, -0.45, 0.3);
+    welder3d.add(termPlus);
+    
+    const termMinus = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.15, 16), darkMat);
+    termMinus.rotation.z = Math.PI / 2;
+    termMinus.position.set(-1.08, -0.45, -0.3);
+    welder3d.add(termMinus);
+    
+    const termPlusInner = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.18, 8), new THREE.MeshPhongMaterial({ color: 0xcccccc, specular: 0xffffff, shininess: 100 }));
+    termPlusInner.rotation.z = Math.PI / 2;
+    termPlusInner.position.set(-1.08, -0.45, 0.3);
+    welder3d.add(termPlusInner);
+    
+    const termMinusInner = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.18, 8), new THREE.MeshPhongMaterial({ color: 0xcccccc, specular: 0xffffff, shininess: 100 }));
+    termMinusInner.rotation.z = Math.PI / 2;
+    termMinusInner.position.set(-1.08, -0.45, -0.3);
+    welder3d.add(termMinusInner);
+    
+    const logoPlate = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.18, 0.01), accentMat);
+    logoPlate.position.set(0.3, 0.4, 0.535);
+    welder3d.add(logoPlate);
+    
+    const modelPlate = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.12, 0.01), new THREE.MeshPhongMaterial({ color: 0x008888, emissive: 0x008888, emissiveIntensity: 0.3 }));
+    modelPlate.position.set(0.3, 0.25, 0.535);
+    welder3d.add(modelPlate);
+    
+    const arcForgePlate = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.25, 0.01), new THREE.MeshPhongMaterial({ color: 0x00ffff, emissive: 0x00ffff, emissiveIntensity: 0.7 }));
+    arcForgePlate.position.set(0.3, 0, 0.535);
+    welder3d.add(arcForgePlate);
+    
+    const yearPlate = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.1, 0.01), new THREE.MeshPhongMaterial({ color: 0x006666, emissive: 0x006666, emissiveIntensity: 0.3 }));
+    yearPlate.position.set(0.3, -0.15, 0.535);
+    welder3d.add(yearPlate);
+    
+    const handleBar1 = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.3, 8), orangeMat);
+    handleBar1.position.set(-0.5, 0.75, 0);
+    welder3d.add(handleBar1);
+    
+    const handleBar2 = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.3, 8), orangeMat);
+    handleBar2.position.set(0.5, 0.75, 0);
+    welder3d.add(handleBar2);
+    
+    const handleTop = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.06, 0.12), orangeMat);
+    handleTop.position.y = 0.88;
+    welder3d.add(handleTop);
+    
+    const ventSide1 = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.03, 0.02), accentMat);
+    ventSide1.position.set(0.3, 0.2, 0.56);
+    welder3d.add(ventSide1);
+    
+    const ventSide2 = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.03, 0.02), accentMat);
+    ventSide2.position.set(0.3, 0.1, 0.56);
+    welder3d.add(ventSide2);
+    
+    const ventSide3 = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.03, 0.02), accentMat);
+    ventSide3.position.set(0.3, 0, 0.56);
+    welder3d.add(ventSide3);
+    
+    const ventSide4 = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.03, 0.02), accentMat);
+    ventSide4.position.set(0.3, -0.1, 0.56);
+    welder3d.add(ventSide4);
+    
+    const ventSide5 = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.03, 0.02), accentMat);
+    ventSide5.position.set(0.3, -0.2, 0.56);
+    welder3d.add(ventSide5);
+    
+    const screwPositions = [
+        [-0.9, 0.55, 0.56], [-0.9, 0.55, -0.56],
+        [0.9, 0.55, 0.56], [0.9, 0.55, -0.56],
+        [-0.9, -0.55, 0.56], [-0.9, -0.55, -0.56],
+        [0.9, -0.55, 0.56], [0.9, -0.55, -0.56]
+    ];
+    
+    screwPositions.forEach(pos => {
+        const screw = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.02, 6), new THREE.MeshPhongMaterial({ color: 0x444444, specular: 0x666666, shininess: 50 }));
+        screw.rotation.x = Math.PI / 2;
+        screw.position.set(pos[0], pos[1], pos[2]);
+        welder3d.add(screw);
+    });
+    
+    scene3d.add(welder3d);
+    
+    const gridHelper = new THREE.GridHelper(8, 16, 0x00ffff, 0x002222);
+    gridHelper.position.y = -1.2;
+    gridHelper.material.opacity = 0.2;
+    gridHelper.material.transparent = true;
+    scene3d.add(gridHelper);
+    
+    const particleGeometry = new THREE.BufferGeometry();
+    const particleCount = 50;
+    const positions = new Float32Array(particleCount * 3);
+    
+    for (let i = 0; i < particleCount * 3; i += 3) {
+        positions[i] = (Math.random() - 0.5) * 8;
+        positions[i + 1] = (Math.random() - 0.5) * 8;
+        positions[i + 2] = (Math.random() - 0.5) * 8;
+    }
+    
+    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    
+    const particleMaterial = new THREE.PointsMaterial({
+        color: 0x00ffff,
+        size: 0.03,
+        transparent: true,
+        opacity: 0.4
+    });
+    
+    scene3d.add(new THREE.Points(particleGeometry, particleMaterial));
+    
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isTouching = false;
+    
+    renderer3d.domElement.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        isTouching = true;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, { passive: false });
+    
+    renderer3d.domElement.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        if (!isTouching || !welder3d) return;
+        
+        const deltaX = e.touches[0].clientX - touchStartX;
+        const deltaY = e.touches[0].clientY - touchStartY;
+        
+        welder3d.rotation.y += deltaX * 0.01;
+        welder3d.rotation.x += deltaY * 0.01;
+        
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, { passive: false });
+    
+    renderer3d.domElement.addEventListener('touchend', () => {
+        isTouching = false;
+    });
+    
+    renderer3d.domElement.addEventListener('mousedown', (e) => {
+        isTouching = true;
+        touchStartX = e.clientX;
+        touchStartY = e.clientY;
+    });
+    
+    renderer3d.domElement.addEventListener('mousemove', (e) => {
+        if (!isTouching || !welder3d) return;
+        
+        const deltaX = e.clientX - touchStartX;
+        const deltaY = e.clientY - touchStartY;
+        
+        welder3d.rotation.y += deltaX * 0.01;
+        welder3d.rotation.x += deltaY * 0.01;
+        
+        touchStartX = e.clientX;
+        touchStartY = e.clientY;
+    });
+    
+    renderer3d.domElement.addEventListener('mouseup', () => {
+        isTouching = false;
+    });
+    
+    animate3d();
+}
+
+function animate3d() {
+    if (!renderer3d) return;
+    requestAnimationFrame(animate3d);
+    
+    if (isRotating3d && welder3d) {
+        welder3d.rotation.y += 0.008;
+    }
+    
+    if (welder3d) {
+        welder3d.position.y = Math.sin(Date.now() * 0.001) * 0.03;
+    }
+    
+    renderer3d.render(scene3d, camera3d);
+}
+
+function hide3D() {
+    const container = document.getElementById('model-container');
+    if (container) {
+        container.style.display = 'none';
+    }
+    if (renderer3d) {
+        renderer3d.dispose();
+        renderer3d = null;
+    }
+}
