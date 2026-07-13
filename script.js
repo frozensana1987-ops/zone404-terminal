@@ -1141,22 +1141,24 @@ let isRotating3d = true;
 
 function init3D() {
     const container = document.getElementById('model-container');
+    const visualRow = document.getElementById('visual-row');
     if (!container) return;
     
     container.innerHTML = '';
-    container.style.display = 'block';
+    if (visualRow) visualRow.style.display = 'flex';
     
     scene3d = new THREE.Scene();
     scene3d.fog = new THREE.Fog(0x000000, 5, 15);
     
-    camera3d = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera3d = new THREE.PerspectiveCamera(45, 400 / 280, 0.1, 1000);
     camera3d.position.set(0, 0.5, 4);
     camera3d.lookAt(0, 0, 0);
     
     renderer3d = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer3d.setSize(container.clientWidth, container.clientHeight);
+    renderer3d.setSize(400, 280);
     renderer3d.setPixelRatio(window.devicePixelRatio);
     renderer3d.setClearColor(0x000000, 0);
+    renderer3d.domElement.style.borderRadius = '4px';
     container.appendChild(renderer3d.domElement);
     
     const ambientLight = new THREE.AmbientLight(0x222222);
@@ -1336,6 +1338,7 @@ function init3D() {
         welder3d.add(screw);
     });
     
+    welder3d.position.x = 0.35;
     scene3d.add(welder3d);
     
     const gridHelper = new THREE.GridHelper(8, 16, 0x00ffff, 0x002222);
@@ -1436,9 +1439,9 @@ function animate3d() {
 }
 
 function hide3D() {
-    const container = document.getElementById('model-container');
-    if (container) {
-        container.style.display = 'none';
+    const visualRow = document.getElementById('visual-row');
+    if (visualRow) {
+        visualRow.style.display = 'none';
     }
     if (renderer3d) {
         renderer3d.dispose();
